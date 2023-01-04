@@ -15,3 +15,8 @@ def main():
 
     entry = ParkingEntry(time, total, free, status)
     parkings['tonparking'].insert(entry)
+
+import requests
+response = requests.get("https://data.montpellier3m.fr/")
+print(response.content)
+
