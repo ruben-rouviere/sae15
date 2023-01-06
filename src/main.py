@@ -1,6 +1,8 @@
-import parking.ParkingEntry;
+"""import parking.ParkingEntry;
+import requests"""
+from lxml import etree
 
-def main():
+"""def main():
     parkings[] = [
         Parking(parking.ParkingCode.COME) 
         # On initialize chaque parking au debut du programme
@@ -14,9 +16,18 @@ def main():
     total = 500
 
     entry = ParkingEntry(time, total, free, status)
-    parkings['tonparking'].insert(entry)
+    parkings['tonparking'].insert(entry)"""
 
-import requests
-response = requests.get("https://data.montpellier3m.fr/")
-print(response.content)
+def readxml():
+    tree=etree.parse("FR_MTP_EURO.xml")
+    dateTime=tree.xpath("/park/DateTime")
+    print(dateTime.text)
+    return()
+
+readxml()
+
+
+
+
+
 
