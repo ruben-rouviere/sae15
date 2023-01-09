@@ -2,6 +2,24 @@
 import requests"""
 from lxml import etree
 
+from parking.ParkingCode import ParkingCode
+from parking.parking import Parking
+
+
+def main():
+    initParkings();
+    loadRecords('./data');
+
+def initParkings():
+    for parking in ParkingCode:
+        Parking(nameCode=parking); # La classe Parking maintient une liste de toutes ses instances.
+
+def loadRecords(dir: str):
+    import os;
+    for filename in [x for x in os.walk(dir) if x.endswith(".xml")]:
+        readxml(filename);
+
+
 """def main():
     parkings[] = [
         Parking(parking.ParkingCode.COME) 
@@ -18,10 +36,8 @@ from lxml import etree
     entry = ParkingEntry(time, total, free, status)
     parkings['tonparking'].insert(entry)"""
 
-def readxml():
-    tree=etree.parse("FR_MTP_EURO.xml")
-    dateTime=tree.xpath("/park/DateTime")
-    print(dateTime.text)
+def readxml(file: str):
+
     return()
 
 readxml()
