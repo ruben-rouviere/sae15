@@ -1,7 +1,7 @@
 import os
 import time
 from parking.CarParks import CarParks;
-
+import time
 
 def getOpts():
     # On essaye d'abord de se configurer depuis l'environnement. 
@@ -32,11 +32,26 @@ def main():
 
     print(f"Starting data collection every {Te} seconds.")
 
+    # On se synchronise sur un multiple de Te afin de garder une cohérence 
+    # entre différentes exécution du script.
+    # Si le script est executé deux fois, on aura donc dans le pire des cas
+    # une différence de temps entre le dernier sample et le premier sample qui sera
+    # un multiple de Te.  
+    while (time.time() % Te) != 0:
+        time.sleep(1)
+    # On démarre la collection à proprement parler.
     while True:
         print("Starting sampling...")
+        # Temps départ
+        Td = time.time()
         carParks.sample()
         print("Acquired data.")
-        time.sleep(Te); # On attend le prochain Te
+        # Durée
+        D = time.time() - Td
+        # On compense Te par la durée de la collection de donnée.
+        # Cela devrait en théorie permettre un écart temporel constant entre les points de données,
+        # pourvu que max(D) < Te
+        time.sleep(D);
 
 main()
 
