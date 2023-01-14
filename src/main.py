@@ -3,6 +3,11 @@ import time
 from parking.CarParks import CarParks;
 import time
 
+
+import logging
+logging.basicConfig(format='%(asctime)s: %(message)s', level=logging.DEBUG)
+
+
 def getOpts():
     # On essaye d'abord de se configurer depuis l'environnement. 
     try:
@@ -21,8 +26,7 @@ def getOpts():
             saveFileName: str = input("Merci de renseigner le nom du fichier de sortie : ")
             return (Te, saveFileName)
         except Exception: # Afin que ctrl+c reste fonctionnel, on limite aux Exceptions et non aux Interupts.
-            print("Paramètre invalide, merci de bien vouloir réessayer.")
-
+            logging.error("Paramètre invalide, merci de bien vouloir réessayer.")
 
 def main():
     carParks = CarParks();
@@ -30,29 +34,33 @@ def main():
     # Paramètres
     Te = getOpts();
 
-    print(f"Starting data collection every {Te} seconds.")
+    logging.info(f"Starting data collection every {Te} seconds.")
 
     # On se synchronise sur un multiple de Te afin de garder une cohérence 
     # entre différentes exécution du script.
     # Si le script est executé deux fois, on aura donc dans le pire des cas
     # une différence de temps entre le dernier sample et le premier sample qui sera
     # un multiple de Te.
-    print(f"Waiting {Te - (int(time.time()) % Te)}s for synchronization...")
-    while (int(time.time()) % Te) != 0:
-        time.sleep(1)
+    nextCycle = lambda currentTime, Te: Te-(round(currentTime) % Te)
+    while nextCycle(time.time(), Te) != Te:
+        logging.info(f"Waiting {nextCycle(time.time(), Te)}s for synchronization...")
+        time.sleep(nextCycle(time.time(), Te))
+    
     # On démarre la collection à proprement parler.
     while True:
-        print("Starting sampling...")
+        logging.info("Starting sampling...")
         # Temps départ
         Td = time.time()
         carParks.sample()
-        print("Acquired data.")
         # Durée
         D = time.time() - Td
+        logging.info(f"Acquired data in {D:f.0} seconds. Next collection in {Te-D:f.0} seconds.")
         # On compense Te par la durée de la collection de donnée.
         # Cela devrait en théorie permettre un écart temporel constant entre les points de données,
         # pourvu que max(D) < Te
-        time.sleep(D);
+        if(D > Te):
+            logging.warn("Duration of sampling greater than sampling interval !")
+        time.sleep(Te-D);
 
 main()
 

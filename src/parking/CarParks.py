@@ -1,5 +1,6 @@
 from datetime import datetime
 from io import StringIO
+import logging
 import os
 from typing import List
 
@@ -79,6 +80,6 @@ class CarParks(Parking):
     def sample(self):
         timestamp = datetime.now().isoformat(timespec='seconds').replace(':','_')
         for parking in self.parkings:
-            print("sampling " + parking.getIdentifier())
+            logging.debug("sampling " + parking.getIdentifier())
             self.internal_sample(timestamp, parking);
-        print("Finished sampling.")
+        logging.info("Finished sampling cars.")
