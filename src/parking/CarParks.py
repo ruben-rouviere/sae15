@@ -4,7 +4,7 @@ import os
 from typing import List
 
 import requests
-from parking.Parking import Parking
+from parking.parking import Parking
 from lxml import etree, html
 
 from parking.ParkingData import ParkingData

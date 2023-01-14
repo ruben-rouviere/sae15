@@ -1,8 +1,17 @@
+import os
 import time
 from parking.CarParks import CarParks;
 
 
 def getOpts():
+    # On essaye d'abord de se configurer depuis l'environnement. 
+    try:
+        return (int(os.environ['SAMPLE_TIME']))
+    except KeyError:
+        # On n'accepte pas de prendre une configuration partielle depuis l'environnement
+        # On fallback sur la configuration interactive. 
+        pass
+
     while True:
         try:
             # Temps_échantionnage
@@ -19,13 +28,14 @@ def main():
     carParks = CarParks();
     #bicyleParks = bicyleParks();
     # Paramètres
-    (Te, saveFileName) = getOpts();
+    Te = getOpts();
+
+    print(f"Starting data collection every {Te} seconds.")
 
     while True:
+        print("Starting sampling...")
         carParks.sample()
         print("Acquired data.")
-        for p in carParks.parkings:
-            p.getIdentifier()
         time.sleep(Te); # On attend le prochain Te
 
 main()
