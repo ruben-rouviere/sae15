@@ -36,8 +36,9 @@ def main():
     # entre différentes exécution du script.
     # Si le script est executé deux fois, on aura donc dans le pire des cas
     # une différence de temps entre le dernier sample et le premier sample qui sera
-    # un multiple de Te.  
-    while (time.time() % Te) != 0:
+    # un multiple de Te.
+    print(f"Waiting {Te - (int(time.time()) % Te)}s for synchronization...")
+    while (int(time.time()) % Te) != 0:
         time.sleep(1)
     # On démarre la collection à proprement parler.
     while True:
