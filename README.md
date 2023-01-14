@@ -1,3 +1,6 @@
+---
+mindmap:
+---
 # Parking
 
 ## Setup

@@ -1,49 +1,42 @@
-"""import parking.ParkingEntry;
-import requests"""
-from lxml import etree
+import time
+from parking.CarParks import CarParks;
 
-from parking.ParkingCode import ParkingCode
-from parking.parking import Parking
+
+def getOpts():
+    while True:
+        try:
+            # Temps_échantionnage
+            Te: int = int(input("Merci de rensigner le temps d'échantillonage (en secondes): "));
+            # Durée_acquisition
+            #Da: int = round(int(input("Merci de rensigner la durée totale d'acquisition (en minutes): ")) * 60 / Te) # 5 minutes * 60 secondes 
+            saveFileName: str = input("Merci de renseigner le nom du fichier de sortie : ")
+            return (Te, saveFileName)
+        except Exception: # Afin que ctrl+c reste fonctionnel, on limite aux Exceptions et non aux Interupts.
+            print("Paramètre invalide, merci de bien vouloir réessayer.")
 
 
 def main():
-    initParkings();
-    loadRecords('./data');
+    carParks = CarParks();
+    #bicyleParks = bicyleParks();
+    # Paramètres
+    (Te, saveFileName) = getOpts();
 
-def initParkings():
-    for parking in ParkingCode:
-        Parking(nameCode=parking); # La classe Parking maintient une liste de toutes ses instances.
+    while True:
+        carParks.sample()
+        print("Acquired data.")
+        for p in carParks.parkings:
+            p.getIdentifier()
+        time.sleep(Te); # On attend le prochain Te
 
-def loadRecords(dir: str):
+main()
+
+
+""" def loadRecords(directory: str):
     import os;
-    for filename in [x for x in os.walk(dir) if x.endswith(".xml")]:
-        readxml(filename);
-
-
-"""def main():
-    parkings[] = [
-        Parking(parking.ParkingCode.COME) 
-        # On initialize chaque parking au debut du programme
-    ]
-    
-    # http
-    # xml
-    # 
-    time = "2022-01-04T12:33"
-    free = 101
-    total = 500
-
-    entry = ParkingEntry(time, total, free, status)
-    parkings['tonparking'].insert(entry)"""
-
-def readxml(file: str):
-
-    return()
-
-readxml()
-
-
-
-
-
-
+    for filename in [x for x in os.listdir(directory) if x.endswith(".xml")]:
+        try:
+            Parking.deserializeEntry(directory+filename);
+        except:
+            print(f"Warning: Could not load file {directory+filename}")
+            traceback.print_exc()
+            pass; """
