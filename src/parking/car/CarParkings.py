@@ -10,7 +10,7 @@ from lxml import etree, html
 
 from parking.Parking import Parking
 from parking.ParkingData import ParkingData
-from parking.Parkings import Parkings
+from parking.parkings import Parkings
 
 
 class CarParkings(Parkings):

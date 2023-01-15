@@ -9,7 +9,7 @@ from typing import List
 import requests
 
 from parking.bicycle.BicycleParking import BicycleParking
-from parking.Parkings import Parkings
+from parking.parkings import Parkings
 
 
 class BicycleParkings(Parkings):

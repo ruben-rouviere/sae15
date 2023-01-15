@@ -1,4 +1,4 @@
-import parking.Parkings;
+import parking.parkings;
 import parking.ParkingEntry;
 import parking.ParkingCode;
-import parking.ParkingStatus;
+import parking.parkingstatus;
