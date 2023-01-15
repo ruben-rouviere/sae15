@@ -7,9 +7,9 @@ import traceback
 from typing import List
 
 import requests
+from parking.Parkings import Parkings
 
 from parking.bicycle.BicycleParking import BicycleParking
-from parking.parkings import Parkings
 
 
 class BicycleParkings(Parkings):

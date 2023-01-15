@@ -1,6 +1,7 @@
 from abc import abstractmethod, ABCMeta
 from typing import List
-from parking.parking import Parking
+
+from parking.Parking import Parking
 
 class Parkings(metaclass=ABCMeta):
 

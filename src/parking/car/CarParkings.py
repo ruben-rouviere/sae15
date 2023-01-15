@@ -7,14 +7,12 @@ from typing import List
 
 import requests
 from lxml import etree, html
+from parking.ParkingData import ParkingData
 
-from parking.parking import Parking
-from parking.parkingData import ParkingData
-from parking.parkings import Parkings
-
-
+from parking.Parkings import Parkings
+from parking.Parking import Parking
 class CarParkings(Parkings):
-    parkings: List[Parking] = []
+    parkings: List[ParkingData] = []
 
     def __init__(self):
         # https://data.montpellier3m.fr/dataset/disponibilite-des-places-dans-les-parkings-de-montpellier-mediterranee-metropole/resource-9

@@ -1,8 +1,7 @@
 import abc
 from typing import List
 
-from parking.parkingData import ParkingData
-
+from parking.ParkingData import ParkingData
 
 class Parking():
     def __init__(self, identifier: str, name: str, dataset: List[ParkingData]=[]) -> None:

@@ -1,9 +1,10 @@
 from typing import List
-from parking.parking import Parking
-from parking.parkingData import ParkingData
+
+from parking.ParkingData import ParkingData
 
 
-class BicycleParking(Parking):
+
+class BicycleParking(ParkingData):
     def __init__(self, identifier: str, name: str, capacity: int, dataset: List[ParkingData]=[]) -> None:
         super(BicycleParking, self).__init__(identifier, name, dataset);
         self.capacity = capacity
