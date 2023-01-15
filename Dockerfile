@@ -8,6 +8,6 @@ ENV SAMPLE_TIME="300"
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY "./src" "."
+COPY "." "."
 
-ENTRYPOINT [ "python", "./main.py" ]
+ENTRYPOINT [ "python", "./src/main.py" ]
