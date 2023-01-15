@@ -3,14 +3,15 @@ from typing import List
 from parking.Parking import Parking
 
 class Parkings(metaclass=ABCMeta):
+
     @abstractmethod
-    def getParkings() -> List[Parking]:
+    def __init__(self, saveDir: str) -> None:
+        pass
+
+    @abstractmethod
+    def getParkings(self) -> List[Parking]:
         raise NotImplementedError
     
     @abstractmethod
-    def sample(self):
-        raise NotImplementedError
-    
-    @abstractmethod
-    def saveData(self):
+    def sample(self, timestamp: str):
         raise NotImplementedError

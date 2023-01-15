@@ -5,16 +5,13 @@ from parking.ParkingData import ParkingData
 
 
 class Parking():
-
     def __init__(self, identifier: str, name: str, dataset: List[ParkingData]=[]) -> None:
         self.identifier = identifier
         self.name = name
         self.dataset = dataset    
 
-
-
     def getIdentifier(self) -> str:
-        return self.identifier    
+        return self.identifier  
 
     def getName(self) -> str:
         return self.name    
