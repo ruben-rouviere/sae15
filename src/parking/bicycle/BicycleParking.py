@@ -1,6 +1,6 @@
 from typing import List
-from parking.Parking import Parking
-from parking.ParkingData import ParkingData
+from parking.parking import Parking
+from parking.parkingData import ParkingData
 
 
 class BicycleParking(Parking):

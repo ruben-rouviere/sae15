@@ -1,7 +1,7 @@
 import abc
 from typing import List
 
-from parking.ParkingData import ParkingData
+from parking.parkingData import ParkingData
 
 
 class Parking():

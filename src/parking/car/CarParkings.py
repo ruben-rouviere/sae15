@@ -8,8 +8,8 @@ from typing import List
 import requests
 from lxml import etree, html
 
-from parking.Parking import Parking
-from parking.ParkingData import ParkingData
+from parking.parking import Parking
+from parking.parkingData import ParkingData
 from parking.parkings import Parkings
 
 
