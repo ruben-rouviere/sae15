@@ -8,7 +8,6 @@ from typing import List
 
 import requests
 
-from parking.Parking import Parking
 from parking.bicycle.BicycleParking import BicycleParking
 from parking.Parkings import Parkings
 
