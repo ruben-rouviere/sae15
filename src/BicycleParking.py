@@ -1,27 +1,26 @@
-import datetime
+from typing import List
 import json
-
 import os
 import time
 import traceback
 from typing import List
-
 import requests
-from parking.Parkings import Parkings
+from CommonParking import CommonParking
+from ParkingData import ParkingData
 
-from parking.bicycle.BicycleParking import BicycleParking
 
+class BicycleParking(CommonParking):
+    def __init__(self, identifier: str, name: str, capacity: int, dataset: List[ParkingData]=[]) -> None:
+        super(BicycleParking, self).__init__(identifier, name, dataset);
+        self.capacity = capacity
 
-class BicycleParkings(Parkings):
-
+class BicycleParkings():
     def __init__(self):
         self.parkings: List[BicycleParking()] = [];
 
         anwser = requests.get(
             "https://montpellier-fr-smoove.klervi.net/gbfs/en/station_information.json")
         info = json.JSONDecoder().decode(anwser.text)
-
-        print(info.keys())
 
         for station in info['data']['stations']:
             self.parkings.append(
@@ -47,10 +46,7 @@ class BicycleParkings(Parkings):
         req = requests.get(URL)
         data = req.text
         self.save(timestamp, data)
-        
-
-
-
+    
 #        timestamp = datetime.now().isoformat(timespec='seconds').replace(':', '_')
     def sample(self, timestamp):
         for attempt in range(3): # 3 essais

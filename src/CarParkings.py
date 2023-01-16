@@ -7,11 +7,10 @@ from typing import List
 
 import requests
 from lxml import etree, html
-from parking.ParkingData import ParkingData
+from ParkingData import ParkingData
+from CommonParking import CommonParking
 
-from parking.Parkings import Parkings
-from parking.Parking import Parking
-class CarParkings(Parkings):
+class CarParkings(CommonParking):
     parkings: List[ParkingData] = []
 
     def __init__(self):
@@ -45,14 +44,14 @@ class CarParkings(Parkings):
 
         for identifier in ids:
             self.parkings.append(
-                Parking(identifier=identifier, name=identifier))
+                CommonParking(identifier=identifier, name=identifier))
 
     """
         Timestamp: unix timestamp, really should be ISO 8601 (yyyy-mm-ddThh:mm:ssZ), however ':' are not a valid character for windows filenames.
         Data: Raw data from API
     """
 
-    def save(self, parking: Parking, timestamp: str, data: str):
+    def save(self, parking: CommonParking, timestamp: str, data: str):
         baseDir = f"data/carParks/{timestamp}"
         os.makedirs(baseDir, exist_ok=True)
 
@@ -60,7 +59,7 @@ class CarParkings(Parkings):
         with open(fileName, "w", encoding='utf8') as fileWriter:
             fileWriter.write(data)
 
-    def internal_sample(self, timestamp: str, parking: Parking):
+    def internal_sample(self, timestamp: str, parking: CommonParking):
         url = f"https://data.montpellier3m.fr/sites/default/files/ressources/{parking.getIdentifier()}.xml"
         req = requests.get(url)
         data = req.text
@@ -92,5 +91,5 @@ class CarParkings(Parkings):
         
         print("Finished sampling cars.")
 
-    def getParkings(self) -> List[Parking]: 
+    def getParkings(self) -> List[CommonParking]: 
         return self.parkings

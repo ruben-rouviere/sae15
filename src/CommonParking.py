@@ -1,9 +1,8 @@
-import abc
 from typing import List
 
-from parking.ParkingData import ParkingData
+from ParkingData import ParkingData
 
-class Parking():
+class CommonParking():
     def __init__(self, identifier: str, name: str, dataset: List[ParkingData]=[]) -> None:
         self.identifier = identifier
         self.name = name

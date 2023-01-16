@@ -2,11 +2,9 @@ from datetime import datetime
 import os
 import time
 import traceback
-from parking.bicycle.BicycleParkings import BicycleParkings
-#from parking.bicycle.BicycleParkings import BicycleParkings
-from parking.car.CarParkings import CarParkings;
+from BicycleParking import BicycleParkings
 
-
+from CarParkings import CarParkings
 
 def getOpts():
     # On essaye d'abord de se configurer depuis l'environnement. 

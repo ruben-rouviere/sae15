@@ -4,8 +4,6 @@ from typing import List
 import requests
 
 class ParkingData():
-
-
     def __init__(self, status: str, total: int, free: int):
         self.status = status
         self.total = total
