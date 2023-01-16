@@ -1,25 +1,23 @@
-from enum import Enum
-from datetime import *
+import abc
 from typing import List
-import ParkingCode;
-import ParkingEntry;
-import ParkingStatus;
+
+from parking.ParkingData import ParkingData
 
 class Parking():
-    nameCode: ParkingCode;
-    entries: List[ParkingEntry()];
+    def __init__(self, identifier: str, name: str, dataset: List[ParkingData]=[]) -> None:
+        self.identifier = identifier
+        self.name = name
+        self.dataset = dataset    
 
-    def __init__(self, nameCode: ParkingCode):
-        self.nameCode = nameCode;
+    def getIdentifier(self) -> str:
+        return self.identifier  
 
-    def insert(self, entry: ParkingEntry):
-        self.entries.append(entry);
+    def getName(self) -> str:
+        return self.name    
 
-    def lastStatus(self) -> ParkingStatus:
-        last = self.entries[len(self.entries)];
-        cutoff = 12 * 60 * 60 # Si la dernière donnée date d'il y a plus de 12h
-
-        if((datetime.now().timestamp - last.timestamp) > cutoff):
-            print(f"Warning: no new data for ${self.nameCode} since more than ${cutoff} seconds.")
-            return ParkingStatus.UNKNOWN;
-        return last.status;
+    def getDataset(self) -> str:
+        return self.dataset
+    
+    def addDataPoint(self, data: ParkingData):
+        self.dataset.append(data)
+    
