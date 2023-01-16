@@ -7,9 +7,6 @@ from parking.bicycle.BicycleParkings import BicycleParkings
 from parking.car.CarParkings import CarParkings;
 
 
-import logging
-logging.basicConfig(format='%(asctime)s: %(message)s', level=logging.INFO)
-
 
 def getOpts():
     # On essaye d'abord de se configurer depuis l'environnement. 
@@ -29,7 +26,7 @@ def getOpts():
             #saveFileName: str = input("Merci de renseigner le nom du fichier de sortie : ")
             return Te
         except Exception: # Afin que ctrl+c reste fonctionnel, on limite aux Exceptions et non aux Interupts.
-            logging.error("Paramètre invalide, merci de bien vouloir réessayer.")
+            print("Paramètre invalide, merci de bien vouloir réessayer.")
 
 def main():
     carParks = CarParkings();
@@ -37,7 +34,7 @@ def main():
     # Paramètres
     Te = getOpts();
 
-    logging.info(f"Starting data collection every {Te} seconds.")
+    print(f"Starting data collection every {Te} seconds.")
 
     # On se synchronise sur un multiple de Te afin de garder une cohérence temporelle
     # entre différentes exécutions du script.
@@ -46,12 +43,12 @@ def main():
     # un multiple de Te.
     nextCycle = lambda currentTime, Te: Te-(round(currentTime) % Te)
     while nextCycle(time.time(), Te) != Te:
-        logging.info(f"Waiting {nextCycle(time.time(), Te)}s for synchronization...")
+        print(f"Waiting {nextCycle(time.time(), Te)}s for synchronization...")
         time.sleep(nextCycle(time.time(), Te))
     
     # On démarre la collection à proprement parler.
     while True:
-        logging.info("Starting sampling...")
+        print("Starting sampling...")
         # Temps départ
         Td = time.time()
         timestamp = datetime.fromtimestamp(Td).isoformat(timespec='seconds').replace(':', '_')
@@ -59,28 +56,28 @@ def main():
         try:
             carParks.sample(timestamp)
         except Exception:
-            traceback.print_stack()
-            logging.error("Car sampling failed !")
+            traceback.print_exc()
+            print("Car sampling failed !")
         # On traite indépendament les deux collectes de données
         # afin de ne pas perdre l'intégralité des données si la collecte de l'une d'entre elle échoue. 
         try:
             bicyleParks.sample(timestamp)
         except Exception:
-            traceback.print_stack()
-            logging.error("Bicycle parking sampling failed !")
+            traceback.print_exc()
+            print("Bicycle parking sampling failed !")
 
 
         # Durée
         D = time.time() - Td
-        logging.info(f"Acquired data in {D:.1f} seconds. Next collection in {Te-D:.1f} seconds.")
+        print(f"Acquired data in {D:.1f} seconds. Next collection in {Te-D:.1f} seconds.")
         
         # On compense Te par la durée de la collection de donnée.
         # Cela devrait en théorie permettre un écart temporel constant entre les points de données,
         # pourvu que max(D) < Te
         if(D > Te):
-            logging.warn("Duration of sampling greater than sampling interval !")
+            print("Duration of sampling greater than sampling interval !")
+        # On doit flush manuellement le logger pour une raison inconnue.
         time.sleep(max(0, Te-D));
-
 
 
 main()

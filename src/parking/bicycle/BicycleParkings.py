@@ -1,6 +1,6 @@
 import datetime
 import json
-import logging
+
 import os
 import time
 import traceback
@@ -56,12 +56,12 @@ class BicycleParkings(Parkings):
         for attempt in range(3): # 3 essais
             try:
                 self.internal_sample(timestamp)
+                print("Finished sampling bicycles.")
                 break;
             except Exception:
-                traceback.print_stack()
-                logging.warn(f"Could not sample bicycles parking (attempt {attempt}/3).")
+                traceback.print_exc()
+                print(f"Could not sample bicycles parking (attempt {attempt}/3).")
                 time.sleep(3^attempt); # Back-off
-    logging.info("Finished sampling bicycles.")
 
     def getParkings(self) -> List[BicycleParking]: 
         return self.parkings

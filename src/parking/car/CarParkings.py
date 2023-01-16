@@ -1,4 +1,4 @@
-import logging
+
 import os
 from datetime import datetime
 import time
@@ -80,17 +80,17 @@ class CarParkings(Parkings):
 
     def sample(self, timestamp):
         for parking in self.parkings:
-            logging.debug("sampling " + parking.getIdentifier())
+            print("sampling " + parking.getIdentifier())
             for attempt in range(3): # 3 essais
                 try:
                     self.internal_sample(timestamp, parking)
                     break;
                 except Exception:
-                    traceback.print_stack()
-                    logging.warn(f"Could not sample {parking.getName()} (attempt {attempt}/3).")
+                    traceback.print_exc()
+                    print(f"Could not sample {parking.getName()} (attempt {attempt}/3).")
                     time.sleep(3^attempt); # Back-off
         
-        logging.info("Finished sampling cars.")
+        print("Finished sampling cars.")
 
     def getParkings(self) -> List[Parking]: 
         return self.parkings
