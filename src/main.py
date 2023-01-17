@@ -79,14 +79,3 @@ def main():
 
 
 main()
-
-
-""" def loadRecords(directory: str):
-    import os;
-    for filename in [x for x in os.listdir(directory) if x.endswith(".xml")]:
-        try:
-            Parking.deserializeEntry(directory+filename);
-        except:
-            print(f"Warning: Could not load file {directory+filename}")
-            traceback.print_exc()
-            pass; """
