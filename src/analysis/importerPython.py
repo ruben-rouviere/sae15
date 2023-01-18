@@ -2,6 +2,9 @@ from lxml import etree
 import json
 import os
 import ParkingData
+import matplotlib.pyplot as plt
+
+
 def car():
     parkings = []
 
@@ -32,6 +35,25 @@ def bicycle():
         return parkings
 
 
-parkings = bicycle.__annotations__
-for parking in parkings
 
+parkings = bicycle.__annotations__
+#for parking in parkings...
+
+"""
+# Préparer les données pour le graphique
+x = [1, 2, 3, 4, 5]
+y = [2, 4, 6, 8, 10]
+
+# Créer le graphique à barres
+plt.bar(x, y)
+
+# Ajouter des titres aux axes
+plt.xlabel('X-axis')
+plt.ylabel('Y-axis')
+
+# Ajouter un titre au graphique
+plt.title('Simple bar chart')
+
+# Afficher le graphique
+plt.show()
+"""
