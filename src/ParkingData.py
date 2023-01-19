@@ -4,11 +4,11 @@ from typing import List
 import requests
 
 class ParkingData():
-    def __init__(self, status: str, total: int, free: int):
+    def __init__(self, name: str, status: str, total: int, free: int):
         self.status = status
         self.total = total
         self.free = free
-
+        self.name = name
 
     def getStatus(self) -> str:
         return self.status
