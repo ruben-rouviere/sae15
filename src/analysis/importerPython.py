@@ -2,7 +2,7 @@ from lxml import etree
 import json
 import os
 import ParkingData
-import matplotlib.pyplot as plt
+from matplotlib import piplot as plt 
 
 
 def car():
@@ -10,7 +10,7 @@ def car():
 
     for sample in os.listdir("../data/carParks"):
         for xml in os.list("../data/carParks/"+sample):
-            etree.parse(xml);
+            etree.parse(xml)
             name = etree.xpath("/park/Name")
             date = etree.xpath("/park/DateTime")
             total = etree.xpath("/park/Total")
@@ -57,3 +57,48 @@ plt.title('Simple bar chart')
 # Afficher le graphique
 plt.show()
 """
+
+def grafic_parkings_car(date):
+    parkings=car()
+    x=[]
+    y1=[]
+    y2=[]
+    for parking in parkings:
+        x.append(parking.getName())
+        y1.append(parking.geTotal())
+        y2.append(parking.geTotal())-parking.getFree()/(parking.geTotal())
+    plt.bar(x, y1)
+    plt.bar(x, y2)
+    plt.show()
+
+def grafic_bicycle_car(date):
+    parkings=car()
+    x=[]
+    y1=[]
+    y2=[]
+    for parking in parkings:
+        x.append(parking.getName())
+        y1.append(parking.geTotal())
+        y2.append(parking.geTotal())-parking.getFree()/(parking.geTotal())
+    plt.bar(x, y1)
+    plt.bar(x, y2)
+    plt.show()
+
+"""
+def grafic_parkings(vehicule, date):
+    parkings=vehicule()
+    x=[]
+    y1=[]
+    y2=[]
+    for parking in parkings:
+        x.append(parking.getName())
+        y1.append(parking.geTotal())
+        y2.append(parking.geTotal())-parking.getFree()/(parking.geTotal())
+    plt.bar(x, y1)
+    plt.bar(x, y2)
+    plt.show()"""
+
+
+#main
+"""grafic_parkings(car,date)
+grafic_parkings(bicycle,date)"""
