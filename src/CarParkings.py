@@ -7,7 +7,7 @@ from typing import List
 
 import requests
 from lxml import etree, html
-from ParkingData import ParkingData
+from analysis.ParkingData import ParkingData
 from CommonParking import CommonParking
 
 class CarParkings(CommonParking):

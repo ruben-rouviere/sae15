@@ -2,20 +2,22 @@ from lxml import etree
 import json
 import os
 import ParkingData
-from matplotlib import piplot as plt 
+from matplotlib import pyplot as plt 
+import time
+import datetime
 
 
 def car():
     parkings = []
-
-    for sample in os.listdir("../data/carParks"):
-        for xml in os.list("../data/carParks/"+sample):
+    for sample in os.listdir("../../data/carParks"):
+        for xml in os.list("../../data/carParks/"+sample):
             etree.parse(xml)
-            name = etree.xpath("/park/Name")
             date = etree.xpath("/park/DateTime")
+            name = etree.xpath("/park/Name")
+            status=etree.xpath["/park/Status"],
             total = etree.xpath("/park/Total")
             free = etree.xpath("/park/Name")
-            monParking = ParkingData(name=name, date=date, total=total, free=free)
+            monParking = ParkingData(date=date, name=name, status=status, total=total, free=free)
             parkings.append(monParking)
     return parkings
     
@@ -26,10 +28,11 @@ def bicycle():
                 data_json = json.parse(data_file);
                 for station in data_json["data"]["station"]:
                     parking = ParkingData(
-                        name=station["station_id"],
                         date=station["last_reported"],
+                        name=station["station_id"],
+                        status=station["is_installed"],
                         total=station["bike_total"],
-                        fre=station["bike_available"]
+                        free=station["bike_available"]
                     )
                     parkings.append(parking)
         return parkings
@@ -58,7 +61,7 @@ plt.title('Simple bar chart')
 plt.show()
 """
 
-def grafic_parkings_car(date):
+"""def grafic_parkings_car(date):
     parkings=car()
     x=[]
     y1=[]
@@ -71,22 +74,8 @@ def grafic_parkings_car(date):
     plt.bar(x, y2)
     plt.show()
 
-def grafic_bicycle_car(date):
-    parkings=car()
-    x=[]
-    y1=[]
-    y2=[]
-    for parking in parkings:
-        x.append(parking.getName())
-        y1.append(parking.geTotal())
-        y2.append(parking.geTotal())-parking.getFree()/(parking.geTotal())
-    plt.bar(x, y1)
-    plt.bar(x, y2)
-    plt.show()
-
-"""
-def grafic_parkings(vehicule, date):
-    parkings=vehicule()
+def grafic_bicycle(date):
+    parkings=bicycle()
     x=[]
     y1=[]
     y2=[]
@@ -99,6 +88,22 @@ def grafic_parkings(vehicule, date):
     plt.show()"""
 
 
+def grafic_parkings(vehicule, date):
+    parkings=vehicule()
+    x=[]
+    y1=[]
+    y2=[]
+    parking_date=[p for p in parkings if p.getDate()==date]
+    for parking in parking_date:
+        x.append(parking.getName())
+        y1.append(parking.geTotal())
+        y2.append(parking.geTotal())-parking.getFree()/(parking.geTotal())
+    plt.bar(x, y1)
+    plt.bar(x, y2)
+    plt.show()
+
 #main
-"""grafic_parkings(car,date)
-grafic_parkings(bicycle,date)"""
+date=datetime.datetime(2023,1,16,19,14,59)
+grafic_parkings(car, date)
+#grafic_parkings(bicycle,date)
+

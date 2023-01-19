@@ -1,6 +1,6 @@
 from typing import List
 
-from ParkingData import ParkingData
+from analysis.ParkingData import ParkingData
 
 class CommonParking():
     def __init__(self, identifier: str, name: str, dataset: List[ParkingData]=[]) -> None:

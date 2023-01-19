@@ -6,7 +6,7 @@ import traceback
 from typing import List
 import requests
 from CommonParking import CommonParking
-from ParkingData import ParkingData
+from analysis.ParkingData import ParkingData
 
 
 class BicycleParking(CommonParking):
