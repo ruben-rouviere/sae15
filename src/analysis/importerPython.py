@@ -9,8 +9,8 @@ import datetime
 
 def car():
     parkings = []
-    for sample in os.listdir("../../data/carParks"):
-        for xml in os.list("../../data/carParks/"+sample):
+    for sample in os.listdir("./data"):
+        for xml in os.listdir("./data"+sample):
             etree.parse(xml)
             date = etree.xpath("/park/DateTime")
             name = etree.xpath("/park/Name")
@@ -23,7 +23,7 @@ def car():
     
 def bicycle():
         parkings = []
-        for sample in os.listdir("../data/carParks"):
+        for sample in os.listdir("./data"):
             with open("../data/carParks/"+sample+"/data.json", 'r', encoding='utf8') as data_file:
                 data_json = json.parse(data_file);
                 for station in data_json["data"]["station"]:
@@ -37,7 +37,7 @@ def bicycle():
                     parkings.append(parking)
         return parkings
 
-
+print(os.listdir("../../"))
 
 parkings = bicycle.__annotations__
 #for parking in parkings...
@@ -106,4 +106,5 @@ def grafic_parkings(vehicule, date):
 date=datetime.datetime(2023,1,16,19,14,59)
 grafic_parkings(car, date)
 #grafic_parkings(bicycle,date)
+
 
