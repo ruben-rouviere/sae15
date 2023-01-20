@@ -34,7 +34,7 @@ def bicycle():
             with open("data/bicyclePark/"+sample+"/data.json", 'r', encoding='utf8') as data_file:
                 data_json = json.JSONDecoder().decode("\n".join(data_file.readlines()))
                 for station in data_json["data"]["stations"]:
-                    print(station["last_reported"], station["station_id"],station["is_installed"],int(station["num_docks_available"]), int(station["num_bikes_available"]) )
+                    #print(station["last_reported"], station["station_id"],station["is_installed"],int(station["num_docks_available"]), int(station["num_bikes_available"]) )
                     parking = ParkingData(
                         date=station["last_reported"],
                         name=station["station_id"],
@@ -96,19 +96,23 @@ def grafic_bicycle(date):
 
 def plot_parkings(parkingsdata, date: int):
     x=[]
-    y1=[]
-    y2=[]
+    y1=[] #total
+    y2=[] #disponible
     parking_date=[p for p in parkingsdata if (p.getDate() < date)]
     for parking in parking_date:
         x.append(parking.getName())
         y1.append(parking.getTotal())
-        y2.append((parking.getFree()/(parking.getTotal())*100))
+        #on traite le cas où le parking a un total de 0 
+        if parking.getTotal()==0:
+            y2.append(0)
+        else:
+            y2.append((parking.getFree()/(parking.getTotal())*100)) 
     #plt.bar(x, y1)
     plt.bar(x, y2)
     plt.show()
 
 #main
-date=int(datetime(2023, 1, 1).timestamp())
+date=int(datetime(2023, 1, 19).timestamp())
 #plot_parkings(car(), date)
 plot_parkings(bicycle(),date)
 
