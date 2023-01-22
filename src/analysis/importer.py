@@ -6,9 +6,15 @@ import os
 from influxdb_client import InfluxDBClient, Point
 from influxdb_client.client.write_api import SYNCHRONOUS, ASYNCHRONOUS
 from influxdb_client.client.exceptions import InfluxDBError
+import requests
 
 def convertBicycle(sample: str):
     points = []
+    # On considère station_infos comme statique, et on les injecte avec chaque point de donnée.
+    station_infos = json.load(
+        requests.get("https://montpellier-fr-smoove.klervi.net/gbfs/en/station_information.json").content
+    )
+    
     with open(f"{sample}/data.json", "r") as json_file:
         print(f"Processing {sample}...")
         jsonTree = json.load(json_file)
@@ -23,9 +29,11 @@ def convertBicycle(sample: str):
                     # a Point.time() sans utiliser datetime.fromtimestamp ne fonctionne pas (le point est inséré avec une timestamp=0) 
                     point.time(datetime.fromtimestamp(value))
                     continue;
-                if(key == "station_id"): # Seul station id est un string.
-                    point.field(key, value)
-                    continue
+                if(key == "station_id"):
+                    # On injecte également les informations de stations_informations.json
+                    for key_info, value_info in station_infos["data"]["stations"][int(value)]:
+                        if(key_info == "name"):
+                            point.field(key_info, value_info)
                 # Les autres données sont des entiers.
                 point.field(key, int(value))
             points.append(point)
