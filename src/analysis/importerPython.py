@@ -49,7 +49,6 @@ def getBicycleInfos(identifier: str):
         bicycleInfos.update({station["station_id"]: station}) 
     return bicycleInfos[identifier]
     
-
 def bicycle():
         parkings = []
         for sample in os.listdir("./data/bicycleParks"):
@@ -105,8 +104,6 @@ def plot_parkings_occupation(parkingsdata, date: int):
 def demande():
     #renvoie un graphique barre du pourcentage de libre d'un parking ou d'un relai-vélo en fonction de la réponse de la requête
     vehicule=int(input("Voulez-vos des informations à propos des parkings voitures (1) ou des relais vélos (2) ?"))
-    if vehicule != 1 and 2:
-        return False
     annee=int(input("A quelle année voulez-vous cette information ? (année)"))
     if annee!=2023:
         return False
