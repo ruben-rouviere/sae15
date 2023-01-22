@@ -62,8 +62,7 @@ def bicycle():
                     )
                     parkings.append(parking) 
         return parkings
-
-parkings = bicycle.__annotations__
+1
 
 def plot_parkings_libre(parkingsdata, date: int):
     x=[]
@@ -103,11 +102,23 @@ def plot_parkings_occupation(parkingsdata, date: int):
 def demande():
     #renvoie un graphique barre du pourcentage de libre d'un parking ou d'un relai-vélo en fonction de la réponse de la requête
     vehicule=int(input("Voulez-vos des informations à propos des parkings voitures (1) ou des relais vélos (2) ?"))
+    if vehicule != 1 or 2:
+        return False
     annee=int(input("A quelle année voulez-vous cette information ? (année)"))
+    if annee!=2023:
+        return False
     mois=int(input("Quel mois ?"))
+    if mois>12:
+        return False
     jour=int(input("Quel jour ?"))
+    if jour> 31:
+        return False
     heure=int(input("Quelle heure ?"))
+    if heure>24:
+        return False
     minute=int(input("Quelle minute ?"))
+    if minute>59:
+        return False
     date=int(datetime(annee, mois, jour, heure,minute).timestamp())
     if vehicule==1:
         plot_parkings_libre(car(), date)
