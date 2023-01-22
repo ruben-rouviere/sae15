@@ -46,7 +46,6 @@ def bicycle():
         return parkings
 
 parkings = bicycle.__annotations__
-#for parking in parkings...
 
 def plot_parkings(parkingsdata, date: int):
     x=[]
