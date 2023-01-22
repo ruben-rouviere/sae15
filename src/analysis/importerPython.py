@@ -47,7 +47,7 @@ def bicycle():
 
 parkings = bicycle.__annotations__
 
-def plot_parkings(parkingsdata, date: int):
+def plot_parkings_libre(parkingsdata, date: int):
     x=[]
     y1=[] #total
     y2=[] #disponible
@@ -64,9 +64,26 @@ def plot_parkings(parkingsdata, date: int):
     plt.bar(x, y2)
     plt.show()
 
+def plot_parkings_occupation(parkingsdata, date: int):
+    x=[]
+    y1=[] #total
+    y2=[] #disponible
+    parking_date=[p for p in parkingsdata if (p.getDate() < date)]
+    for parking in parking_date:
+        x.append(parking.getName())
+        y1.append(parking.getTotal())
+        #on traite le cas où le parking a un total de 0 
+        if parking.getTotal()==0:
+            y2.append(0)
+        else:
+            y2.append((parking.getTotal()-parking.getFree()/(parking.getTotal())*100)) 
+    #plt.bar(x, y1)
+    plt.bar(x, y2)
+    plt.show()
+
 #main
 date=int(datetime(2023, 1, 19).timestamp())
-#plot_parkings(car(), date)
-plot_parkings(bicycle(),date)
+plot_parkings_occupation(car(), date)
+#plot_parkings(bicycle(),date)
 
 
