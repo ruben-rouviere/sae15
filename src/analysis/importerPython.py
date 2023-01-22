@@ -101,6 +101,7 @@ def plot_parkings_occupation(parkingsdata, date: int):
     plt.show()
 
 def demande():
+    #renvoie un graphique barre du pourcentage de libre d'un parking ou d'un relai-vélo en fonction de la réponse de la requête
     vehicule=int(input("Voulez-vos des informations à propos des parkings voitures (1) ou des relais vélos (2) ?"))
     annee=int(input("A quelle année voulez-vous cette information ? (année)"))
     mois=int(input("Quel mois ?"))
