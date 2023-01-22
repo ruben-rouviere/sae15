@@ -43,7 +43,6 @@ def getBicycleInfos(identifier: str):
         bicycleInfos.update({station["station_id"]: station}) 
     return bicycleInfos[identifier]
     
-
 def bicycle():
 
         parkings = []
