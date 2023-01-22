@@ -48,52 +48,6 @@ def bicycle():
 parkings = bicycle.__annotations__
 #for parking in parkings...
 
-"""
-# Préparer les données pour le graphique
-x = [1, 2, 3, 4, 5]
-y = [2, 4, 6, 8, 10]
-
-# Créer le graphique à barres
-plt.bar(x, y)
-
-# Ajouter des titres aux axes
-plt.xlabel('X-axis')
-plt.ylabel('Y-axis')
-
-# Ajouter un titre au graphique
-plt.title('Simple bar chart')
-
-# Afficher le graphique
-plt.show()
-"""
-
-"""def grafic_parkings_car(date):
-    parkings=car()
-    x=[]
-    y1=[]
-    y2=[]
-    for parking in parkings:
-        x.append(parking.getName())
-        y1.append(parking.geTotal())
-        y2.append(parking.geTotal())-parking.getFree()/(parking.geTotal())
-    plt.bar(x, y1)
-    plt.bar(x, y2)
-    plt.show()
-
-def grafic_bicycle(date):
-    parkings=bicycle()
-    x=[]
-    y1=[]
-    y2=[]
-    for parking in parkings:
-        x.append(parking.getName())
-        y1.append(parking.geTotal())
-        y2.append(parking.geTotal())-parking.getFree()/(parking.geTotal())
-    plt.bar(x, y1)
-    plt.bar(x, y2)
-    plt.show()"""
-
-
 def plot_parkings(parkingsdata, date: int):
     x=[]
     y1=[] #total
