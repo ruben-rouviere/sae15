@@ -2,6 +2,8 @@ from typing import List
 from lxml import etree
 import json
 import os
+
+import requests
 from ParkingData import ParkingData
 from matplotlib import pyplot as plt 
 import time
@@ -27,6 +29,21 @@ def car() -> List[ParkingData]:
                 pass
     return parkings
     
+bicycleInfos = {};
+
+def getBicycleInfos(identifier: str):
+    if(identifier in bicycleInfos):
+       return bicycleInfos[identifier] # Memoization
+    jsonInfo = json.JSONDecoder().decode(requests.get("https://montpellier-fr-smoove.klervi.net/gbfs/en/station_information.json").text)
+    
+    # L'index et le numéro d'ID ne correspondent pas systématiquement.
+    # De plus, certains IDs n'existant pas (plus?), on ne peut pas utiliser l'index d'une liste.
+    # On doit donc utiliser un dictionnaire.
+    for station in jsonInfo["data"]["stations"]:
+        bicycleInfos.update({station["station_id"]: station}) 
+    return bicycleInfos[identifier]
+    
+
 def bicycle():
 
         parkings = []
@@ -35,11 +52,12 @@ def bicycle():
                 data_json = json.JSONDecoder().decode("\n".join(data_file.readlines()))
                 for station in data_json["data"]["stations"]:
                     #print(station["last_reported"], station["station_id"],station["is_installed"],int(station["num_docks_available"]), int(station["num_bikes_available"]) )
+                    bicycleInfo = getBicycleInfos(station["station_id"])
                     parking = ParkingData(
                         date=station["last_reported"],
-                        name=station["station_id"],
+                        name=bicycleInfo["name"],
                         status=station["is_installed"],
-                        total= int(station["num_docks_available"]),
+                        total= bicycleInfo["capacity"],
                         free=int(station["num_bikes_available"])
                     )
                     parkings.append(parking) 
@@ -61,7 +79,8 @@ def plot_parkings_libre(parkingsdata, date: int):
         else:
             y2.append((parking.getFree()/(parking.getTotal())*100)) 
     #plt.bar(x, y1)
-    plt.bar(x, y2)
+    barContainer = plt.bar(x, y2)
+    print()
     plt.show()
 
 def plot_parkings_occupation(parkingsdata, date: int):
