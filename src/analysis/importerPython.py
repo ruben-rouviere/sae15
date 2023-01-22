@@ -6,9 +6,7 @@ import os
 import requests
 from ParkingData import ParkingData
 from matplotlib import pyplot as plt 
-import time
-from datetime import datetime
-
+from datetime import datetime, timedelta
 
 def car() -> List[ParkingData]:
     parkings = []
@@ -16,6 +14,14 @@ def car() -> List[ParkingData]:
         for xml in os.listdir("./data/carParks/"+sample):
             try:
                 tree = etree.parse(f"./data/carParks/{sample}/{xml}")
+
+                # Filtre temporel (voir analysis.ipynb): date de collecte de l'échantillon - date des donneés
+                delta = abs(datetime.fromisoformat(sample.replace('_', ':')) - datetime.fromisoformat(tree.xpath("/park/DateTime")[0].text.split('.')[0]))
+                #print(delta)
+                if(delta > timedelta(hours=12)):
+                    print(f"Invalid sample: {sample}/{xml}: timedelta = {delta}")
+                    continue; 
+
                 date = int(datetime.fromisoformat(tree.xpath("/park/DateTime")[0].text.split('.')[0]).timestamp())
                 name = tree.xpath("/park/Name")[0].text
                 status = tree.xpath("/park/Status")[0].text
@@ -45,10 +51,9 @@ def getBicycleInfos(identifier: str):
     
 
 def bicycle():
-
         parkings = []
-        for sample in os.listdir("data/bicyclePark"):
-            with open("data/bicyclePark/"+sample+"/data.json", 'r', encoding='utf8') as data_file:
+        for sample in os.listdir("./data/bicycleParks"):
+            with open("./data/bicycleParks/"+sample+"/data.json", 'r', encoding='utf8') as data_file:
                 data_json = json.JSONDecoder().decode("\n".join(data_file.readlines()))
                 for station in data_json["data"]["stations"]:
                     #print(station["last_reported"], station["station_id"],station["is_installed"],int(station["num_docks_available"]), int(station["num_bikes_available"]) )
@@ -62,7 +67,6 @@ def bicycle():
                     )
                     parkings.append(parking) 
         return parkings
-1
 
 def plot_parkings_libre(parkingsdata, date: int):
     x=[]
@@ -79,7 +83,6 @@ def plot_parkings_libre(parkingsdata, date: int):
             y2.append((parking.getFree()/(parking.getTotal())*100)) 
     #plt.bar(x, y1)
     barContainer = plt.bar(x, y2)
-    print()
     plt.show()
 
 def plot_parkings_occupation(parkingsdata, date: int):
@@ -125,8 +128,4 @@ def demande():
     else:
         plot_parkings_libre(bicycle(), date)
         
-#main
-demande()
-
-
-
+#demande()
