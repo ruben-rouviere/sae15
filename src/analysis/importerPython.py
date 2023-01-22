@@ -100,9 +100,21 @@ def plot_parkings_occupation(parkingsdata, date: int):
     plt.bar(x, y2)
     plt.show()
 
+def demande():
+    vehicule=int(input("Voulez-vos des informations à propos des parkings voitures (1) ou des relais vélos (2) ?"))
+    annee=int(input("A quelle année voulez-vous cette information ? (année)"))
+    mois=int(input("Quel mois ?"))
+    jour=int(input("Quel jour ?"))
+    heure=int(input("Quelle heure ?"))
+    minute=int(input("Quelle minute ?"))
+    date=int(datetime(annee, mois, jour, heure,minute).timestamp())
+    if vehicule==1:
+        plot_parkings_libre(car(), date)
+    else:
+        plot_parkings_libre(bicycle(), date)
+        
 #main
-date=int(datetime(2023, 1, 19).timestamp())
-plot_parkings_occupation(car(), date)
-#plot_parkings(bicycle(),date)
+demande()
+
 
 
