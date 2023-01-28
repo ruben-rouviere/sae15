@@ -2,30 +2,14 @@
 
 ## Structure
 
-## Collecteur
+### Collecteur
 
-Le collecteur est chargé de recolter les données depuis les APIs.
+Le [collecteur](src/collector/README.md) est chargé de recolter les données depuis les APIs.
 
-### Setup
+### Analyse
 
-Via docker:
+L'interprétation des résultats est disponible sous forme d'un [notebook jupyter](src/analysis/jupyter.ipynb)
 
-```bash
-mkdir data
-docker build collector/ -t rouviere-etzweiler/sae15-collector
-docker run -v "$(realpath ./data):/usr/local/src/data" rouviere-etzweiler/sae15-collector
-```
+### Données
 
-Ou directement via python:
-
-```bash
-python3 ./collector/main.py
-```
-
-## Analyse
-
-## Setup
-
-```bash
-pip install -r requirements.txt
-```
+Les données brutes récoltées sont disponible via [Git LFS](https://git-lfs.com/) dans le dossier [data/](data/).
