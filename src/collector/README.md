@@ -1,5 +1,6 @@
 # Collecteur
 
+Auteur: Ruben
 Ce collecteur récupère toutes les 5 minutes (par défaut, valeur configurable) les données relatives au parkings vélos et voiture de Montpellier.
 
 ## Setup
@@ -26,6 +27,18 @@ python3 ./collector/main.py
 
 Intervalle de collecte:
 
+``
+SAMPLE_TIME = #En secondes)
+``
+
+Exemple:
+
 ```bash
-export SAMPLE_TIME = #En secondes)
+SAMPLE_TIME="300" python3 ./collector/main.py
+```
+
+Ou via docker:
+
+```bash
+docker run -e "SAMPLE_TIME=300" # ...
 ```
